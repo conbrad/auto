@@ -25,6 +25,10 @@ object CarAdvert {
     new CarAdvert(UUID.randomUUID(), "N/A", Gasoline, 0, false, Some(0), Some(Date.from(Instant.now())))
   }
 
+  def createNewFromUUID(id: UUID): CarAdvert = {
+    new CarAdvert(id, "N/A", Gasoline, 0, true, None, None)
+  }
+
   def createNewDefault(): CarAdvert = {
     new CarAdvert(UUID.randomUUID(), "N/A", Gasoline, 0, true, None, None)
   }

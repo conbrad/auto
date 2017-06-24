@@ -1,7 +1,6 @@
 package repositories
 
 import java.util.UUID
-import javax.inject.Inject
 
 import com.google.inject.ImplementedBy
 

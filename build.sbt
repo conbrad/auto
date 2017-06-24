@@ -13,6 +13,11 @@ libraryDependencies ++= Seq(
   specs2 % Test
 )
 
+routesImport ++= Seq(
+  "java.util.UUID"
+
+)
+
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 
 // Play provides two styles of routers, one expects its actions to be injected, the
