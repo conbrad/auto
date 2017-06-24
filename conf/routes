@@ -6,6 +6,8 @@
 GET     /                           controllers.Application.index
 
 GET     /test                       controllers.CarAdvertsController.test
+POST    /create                     controllers.CarAdvertsController.createAdvert
+
 
 
 # Map static resources from the /public folder to the /assets URL path

@@ -7,13 +7,13 @@ import javax.inject.Inject
   */
 @Inject
 class CarAdvertInMemoryRepository extends CarAdvertRepository {
-  override def getAll(): Seq[CarAdvertRepository] = ???
+  override def getAll(): Seq[CarAdvertRepository] = { List() }
 
-  override def get(id: UUID): Option[CarAdvertRepository] = ???
+  override def get(id: UUID): Option[CarAdvertRepository] = None
 
-  override def insert(newCarAdvert: CarAdvertRepository): Unit = ???
+  override def insert(newCarAdvert: CarAdvertRepository): Unit = {}
 
-  override def update(updatedCarAdvert: CarAdvertRepository): Unit = ???
+  override def update(updatedCarAdvert: CarAdvertRepository): Unit = {}
 
-  override def delete(id: UUID): Unit = ???
+  override def delete(id: UUID): Unit = {}
 }

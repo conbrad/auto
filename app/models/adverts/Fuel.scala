@@ -1,6 +1,6 @@
 package models.adverts
 
-import play.api.libs.json._
+import play.api.libs.json.{JsValue, _}
 
 
 /**

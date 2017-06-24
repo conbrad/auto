@@ -33,12 +33,17 @@ object CarAdvert {
     new CarAdvert(UUID.randomUUID(), title, fuel, price, false, Some(mileage), Some(firstRegistrationDate))
   }
 
-  def createNew(title: String, fuel: Fuel, price: Int): CarAdvert = {
+  def createNew(title: String,
+                fuel: Fuel,
+                price: Int,
+                isNew: Boolean,
+                mileage: Option[Int],
+                firstRegistration: Option[Date]): CarAdvert = {
     new CarAdvert(UUID.randomUUID(), title, fuel, price, false, None, None)
   }
 
   implicit val carAdvertFormatter: Format[CarAdvert] = (
-    (__ \ "id").format[UUID] and
+      (__ \ "id").format[UUID] and
       (__ \ "title").format[String] and
       (__ \ "fuel").format[Fuel] and
       (__ \ "price").format[Int] and
@@ -55,5 +60,4 @@ object CarAdvert {
       case None ⇒ JsNull
     }
   }
-
 }
