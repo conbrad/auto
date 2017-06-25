@@ -10,6 +10,19 @@ import play.api.libs.functional.syntax._
 /**
   * Created by conor on 2017-06-23.
   */
+
+object FieldConstants {
+  val ID: String = "id"
+  val TITLE: String = "title"
+  val FUEL: String = "fuel"
+  val PRICE: String = "price"
+  val IS_NEW: String = "isNew"
+  val MILEAGE: String = "mileage"
+  val FIRST_REGISTRATION: String = "firstRegistration"
+
+  def allFields: Seq[String] = List(ID, TITLE, FUEL, PRICE, IS_NEW, MILEAGE, FIRST_REGISTRATION)
+}
+
 case class CarAdvert(id: UUID,
                      title: String,
                      fuel: Fuel,

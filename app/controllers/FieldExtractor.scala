@@ -13,7 +13,6 @@ object FieldExtractor {
     (json \ "id").get.as[UUID]
   }
 
-
   def getTitle(json: JsValue) = {
     (json \ "title").get.as[String]
   }

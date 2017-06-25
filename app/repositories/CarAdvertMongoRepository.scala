@@ -68,7 +68,6 @@ object CarAdvertMongoRepository {
   def convertBack(mongoCarAdvert: DBObject): Option[CarAdvert] = {
     val id = mongoCarAdvert.getAs[String]("id").getOrElse(throw new Exception)
     val title = mongoCarAdvert.getAs[String]("title").getOrElse(throw new Exception)
-    // TODO : fix conversion of Fuel type
     val fuelName = mongoCarAdvert.getAs[String]("fuel").getOrElse(throw new Exception)
     val price = mongoCarAdvert.getAs[Int]("price").getOrElse(throw new Exception)
     val isNew = mongoCarAdvert.getAs[Boolean]("isNew").getOrElse(throw new Exception)

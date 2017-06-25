@@ -15,7 +15,7 @@ import FieldExtractor._
 class CarAdvertsController @Inject()(carAdvertService: CarAdvertService) extends Controller {
 
   def createAdvert = Action { request =>
-    val json: JsValue = request.body.asJson.get
+    val json: JsValue = request.body.asJson.getOrElse(JsNull)
     val title: String = getTitle(json)
     val fuel: Option[Fuel] = getFuel(json)
     val price: Int = getPrice(json)

@@ -14,6 +14,7 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies += "org.mongodb" %% "casbah" % "3.1.1"
+libraryDependencies += "org.scalatest" % "scalatest_2.11" % "3.0.1" % "test"
 
 routesImport ++= Seq(
   "java.util.UUID"
