@@ -2,8 +2,8 @@ package controllers
 
 import java.util.{Date, UUID}
 
-import models.adverts.{Diesel, Gasoline}
-import play.api.libs.json.{JsDefined, JsValue}
+import models.adverts.Fuel
+import play.api.libs.json.{JsDefined, JsNull, JsValue}
 
 /**
   * Created by conor on 2017-06-24.
@@ -27,21 +27,19 @@ object FieldExtractor {
   }
 
   def getFuel(json: JsValue) = {
-    (json \ "fuel").get.as[String] match {
-      case "gasoline" => Gasoline
-      case "diesel" => Diesel
-    }
+    val name = (json \ "fuel").getOrElse(JsNull).as[String]
+    Fuel.findByName(name)
   }
 
   def getMileage(json: JsValue): Option[Int] = {
-    (json \ "mileage") match {
+    json \ "mileage" match {
       case JsDefined(value) => Some(value.as[Int])
       case _ => None
     }
   }
 
   def getFirstRegistration(json: JsValue): Option[Date] = {
-    (json \ "firstRegistration") match {
+    json \ "firstRegistration" match {
       case JsDefined(value) => Some(value.as[Date])
       case _ => None
     }

@@ -3,6 +3,7 @@ package models.adverts
 import java.time.Instant
 import java.util.{Date, UUID}
 
+import models.adverts.Fuel.Gasoline
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 

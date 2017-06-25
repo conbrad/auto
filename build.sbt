@@ -13,6 +13,8 @@ libraryDependencies ++= Seq(
   specs2 % Test
 )
 
+libraryDependencies += "org.mongodb" %% "casbah" % "3.1.1"
+
 routesImport ++= Seq(
   "java.util.UUID"
 

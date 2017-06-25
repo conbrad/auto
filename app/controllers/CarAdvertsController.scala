@@ -17,14 +17,18 @@ class CarAdvertsController @Inject()(carAdvertService: CarAdvertService) extends
   def createAdvert = Action { request =>
     val json: JsValue = request.body.asJson.get
     val title: String = getTitle(json)
-    val fuel: Fuel = getFuel(json)
+    val fuel: Option[Fuel] = getFuel(json)
     val price: Int = getPrice(json)
     val isNew: Boolean = getIsNew(json)
     val mileage: Option[Int] = getMileage(json)
     val firstRegistration: Option[Date] = getFirstRegistration(json)
-    val newCarAdvert = CarAdvert.createNew(title, fuel, price, isNew, mileage, firstRegistration)
 
-    Ok(Json.toJson(carAdvertService.createAdvert(newCarAdvert)))
+    fuel match {
+      case Some(fuelType) =>
+        val newCarAdvert = CarAdvert.createNew(title, fuelType, price, isNew, mileage, firstRegistration)
+        Ok(Json.toJson(carAdvertService.createAdvert(newCarAdvert)))
+      case _ => BadRequest
+    }
   }
 
   def deleteAdvert(id: UUID) = Action { request =>
@@ -35,14 +39,18 @@ class CarAdvertsController @Inject()(carAdvertService: CarAdvertService) extends
     val json: JsValue = request.body.asJson.get
     val id: UUID = getUUID(json)
     val title: String = getTitle(json)
-    val fuel: Fuel = getFuel(json)
+    val fuel: Option[Fuel] = getFuel(json)
     val price: Int = getPrice(json)
     val isNew: Boolean = getIsNew(json)
     val mileage: Option[Int] = getMileage(json)
     val firstRegistration: Option[Date] = getFirstRegistration(json)
-    val updatedAdvert = CarAdvert.createNew(title, fuel, price, isNew, mileage, firstRegistration)
 
-    Ok(Json.toJson(carAdvertService.updateAdvert(updatedAdvert)))
+    fuel match {
+      case Some(value) =>
+        val updatedAdvert = CarAdvert(id, title, value, price, isNew, mileage, firstRegistration)
+        Ok(Json.toJson(carAdvertService.updateAdvert(updatedAdvert)))
+      case _ => BadRequest
+    }
   }
 
   def getAllAdverts = Action { request =>

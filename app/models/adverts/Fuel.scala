@@ -6,21 +6,26 @@ import play.api.libs.json.{JsValue, _}
 /**
   * Created by conor on 2017-06-23.
   */
-sealed trait Fuel
-case object Gasoline extends Fuel
-case object Diesel extends Fuel
+
+sealed case class Fuel(value: String)
 
 object Fuel {
+  object Gasoline extends Fuel("gasoline")
+  object Diesel extends Fuel("diesel")
+
+  val fuelTypes: Seq[Fuel] = Seq(Gasoline, Diesel)
+
+  def findByName(name: String): Option[Fuel] = {
+    fuelTypes.find(fuelType => fuelType.value == name)
+  }
+
   implicit object FuelFormatter extends Format[Fuel] {
-    def writes(fuel: Fuel) = fuel match {
-      case Gasoline => Json.toJson("Gasoline")
-      case Diesel => Json.toJson("Diesel")
-    }
+    def writes(fuel: Fuel) = Json.toJson(fuel.value)
 
     def reads(json: JsValue) = {
-      (json \ "fuel").as[String] match {
-        case "gasoline" => JsSuccess(Gasoline)
-        case "diesel" => JsSuccess(Diesel)
+      Fuel.findByName((json \ "fuel").as[String]) match {
+        case Some(fuel) => JsSuccess(fuel)
+        case _ => JsError("Unknown fuel type")
       }
     }
   }
