@@ -1,0 +1,64 @@
+{
+	"variables": [],
+	"info": {
+		"name": "AutoScout",
+		"_postman_id": "ac455ec9-bde0-5b19-8102-8e1309d8433d",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get",
+			"request": {
+				"url": "http://localhost:9000/get/287a97e3-930a-40c9-8ac9-be15a5f06d77",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"request": {
+				"url": "http://localhost:9000/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\":\"N/A\",\n\t\"fuel\":\"gasoline\",\n\t\"price\":0,\n\t\"isNew\":true,\n\t\"mileage\":10000,\n\t\"firstRegistration\":\"1990-02-01\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"url": "http://localhost:9000/delete/287a97e3-930a-40c9-8ac9-be15a5f06d77",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "getAll",
+			"request": {
+				"url": "http://localhost:9000/getAll",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
