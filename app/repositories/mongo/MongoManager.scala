@@ -1,11 +1,12 @@
 package repositories.mongo
 
-import com.mongodb.casbah.{MongoCollection, MongoConnection}
+import com.google.inject.ImplementedBy
+import com.mongodb.casbah.MongoCollection
 
-object MongoManager {
-  private val SERVER = "localhost"
-  private val DATABASE = "auto"
-  private val COLLECTION = "carAdverts"
-  val connection = MongoConnection(SERVER)
-  val collection: MongoCollection = connection(DATABASE)(COLLECTION)
+/**
+  * Created by conor on 2017-06-25.
+  */
+@ImplementedBy(classOf[CarAdvertMongoManager])
+trait MongoManager {
+  def collection: MongoCollection
 }

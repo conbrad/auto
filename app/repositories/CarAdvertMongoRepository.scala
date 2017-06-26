@@ -3,22 +3,22 @@ import java.util.{Date, UUID}
 import javax.inject.Inject
 
 import com.mongodb.casbah.Imports._
-import com.mongodb.casbah.{MongoCollection, MongoConnection}
 import models.adverts.{CarAdvert, Fuel}
+import repositories.mongo.MongoManager
 
 /**
   * Created by conor on 2017-06-24.
   */
 @Inject
-class CarAdvertMongoRepository extends CarAdvertRepository {
+class CarAdvertMongoRepository @Inject() (mongoClient: MongoManager) extends CarAdvertRepository {
   import CarAdvertMongoRepository._
   override def getAll(): Seq[CarAdvert] = {
-    collection.find.flatMap(convertBack).toSeq
+    mongoClient.collection.find.flatMap(convertBack).toSeq
   }
 
   override def get(id: UUID): Option[CarAdvert] = {
     val query = MongoDBObject("id" -> id.toString)
-    CarAdvertMongoRepository.collection.findOne(query) match {
+    mongoClient.collection.findOne(query) match {
       case Some(carAdvert) => convertBack(carAdvert)
       case _ => None
     }
@@ -26,20 +26,20 @@ class CarAdvertMongoRepository extends CarAdvertRepository {
 
   override def insert(newCarAdvert: CarAdvert): Unit = {
     val mongoObject = buildMongoObject(newCarAdvert)
-    collection.insert(mongoObject)
+    mongoClient.collection.insert(mongoObject)
   }
 
   override def update(updatedCarAdvert: CarAdvert): Option[CarAdvert] = {
-    val query = MongoDBObject("id" -> updatedCarAdvert.id)
-    collection.findAndModify(query, buildMongoObject(updatedCarAdvert)) match {
+    val query = MongoDBObject("id" -> updatedCarAdvert.id.toString)
+    mongoClient.collection.findAndModify(query, buildMongoObject(updatedCarAdvert)) match {
       case Some(updated) => convertBack(updated)
       case _ => None
     }
   }
 
   override def delete(id: UUID): Option[CarAdvert] = {
-    val query = MongoDBObject("id" -> id)
-    collection.findAndRemove(query) match {
+    val query = MongoDBObject("id" -> id.toString)
+    mongoClient.collection.findAndRemove(query) match {
       case Some(deleted) => convertBack(deleted)
       case _ => None
     }
@@ -47,12 +47,6 @@ class CarAdvertMongoRepository extends CarAdvertRepository {
 }
 
 object CarAdvertMongoRepository {
-  private val SERVER = "localhost"
-  private val DATABASE = "auto"
-  private val COLLECTION = "carAdverts"
-  val connection = MongoConnection(SERVER)
-  val collection: MongoCollection = connection(DATABASE)(COLLECTION)
-
   def buildMongoObject(carAdvert: CarAdvert) = {
     val builder = MongoDBObject.newBuilder
     builder += "id" -> carAdvert.id.toString
