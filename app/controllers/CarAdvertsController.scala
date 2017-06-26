@@ -35,7 +35,7 @@ class CarAdvertsController @Inject()(carAdvertService: CarAdvertService) extends
     Ok(Json.toJson(carAdvertService.deleteAdvert(id)))
   }
 
-  def updateAdvert = Action { request =>
+  def updateAdvert() = Action { request =>
     val json: JsValue = request.body.asJson.get
     val id: UUID = getUUID(json)
     val title: String = getTitle(json)

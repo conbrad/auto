@@ -6,4 +6,5 @@
 GET     /get/:id                    controllers.CarAdvertsController.getAdvert(id: UUID)
 GET     /getAll                     controllers.CarAdvertsController.getAllAdverts
 POST    /create                     controllers.CarAdvertsController.createAdvert
+POST    /update                     controllers.CarAdvertsController.updateAdvert
 POST    /delete/:id                 controllers.CarAdvertsController.deleteAdvert(id: UUID)

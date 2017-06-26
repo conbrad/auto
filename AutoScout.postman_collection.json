@@ -70,6 +70,26 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"url": "http://localhost:9000/update",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"7e3aefe7-4f7c-4836-933f-5fc802acbfc3\",\n\t\"title\":\"N/A\",\n\t\"fuel\":\"diesel\",\n\t\"price\":1,\n\t\"isNew\":true,\n\t\"mileage\":10000,\n\t\"firstRegistration\":\"1990-02-01\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
