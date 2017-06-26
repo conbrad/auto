@@ -24,7 +24,7 @@ On http://localhost:9000/
 
 | Endpoint      | Verb | Notes  |
 | ------------- |:----:| -----------------------------------------------------------------------------------:|
-| get(id)       | GET  |   The variable id needs to be a string with of a UUID format.Returns the carAdvert if found, otherwise null   |
+| get(id)       | GET  |   The variable id needs to be a string with of a UUID format. Returns the carAdvert if found, otherwise null   |
 | getAll        | GET  |   Returns a JSON array of carAdverts. Optional query string variable "sortBy={id, title, fuel, price, isNew, mileage, firstRegistration}" |
 | create        | POST |    Accepts a properly structured JSON object for a CarAdvert, without the id field, creates it and returns it back with the created id field |
 | update        | POST |    Accepts a properly structured JSON object for a CarAdvert, with the existing id field, updates it and returns it back |
@@ -57,7 +57,9 @@ e.g.
 	"firstRegistration":"1990-02-01"
 }
 ```
-#### Also note that new cars also require mileage and firstRegistration fields
+### Also note
+ - new cars also require mileage and firstRegistration fields
+ - update carAdvert object must contain a valid id value due to current lack of validation
 
 ### Use Postman to manually test API
 A postman collection is included at the project root: `AutoScout.postman_collection.json`
