@@ -1,34 +1,61 @@
-# auto
+# CarAdvert Web Service on Play! Framework
 
-### Requirements
+### Setup
 
-Create a git repository (either local or public one on GitHub) that contains a RESTful web-service written in Scala. The service should allow users to place new car adverts and view, modify and delete existing car adverts.
+Backend: Play 2.4
 
-Car adverts should have the following fields:
-* **id** (_required_): **int** or **guid**, choose whatever is more convenient for you;
-* **title** (_required_): **string**, e.g. _"Audi A4 Avant"_;
-* **fuel** (_required_): gasoline or diesel, use some type which could be extended in the future by adding additional fuel types;
-* **price** (_required_): **integer**;
-* **new** (_required_): **boolean**, indicates if car is new or used;
-* **mileage** (_only for used cars_): **integer**;
-* **first registration** (_only for used cars_): **date** without time.
+Database: Mongo
 
-Service should:
-* have functionality to return list of all car adverts;
-  * optional sorting by any field specified by query parameter, default sorting - by **id**;
-* have functionality to return data for single car advert by id;
-* have functionality to add car advert;
-* have functionality to modify car advert by id;
-* have functionality to delete car advert by id;
-* have validation (see required fields and fields only for used cars);
-* accept and return data in JSON format, use standard JSON date format for the **first registration** field.
+1. Install activator from [here](https://www.lightbend.com/activator/download)
+2. Follow instructions to add it to your `PATH` [here](https://playframework.com/documentation/2.4.x/Installing)
+3. Install mongodb
+   - Mac: `brew install mongodb`
+    - Linux: Follow instructions [here](https://docs.mongodb.com/v3.0/administration/install-on-linux/)
+4. Run mongo on localhost with default port (27017) and designated datastore folder for the project
+    - `mongod --dbpath <path>/<to>/<project>/datastore`
+5. Run the server on localhost:9000 with
+    - `activator run`
+6. Run tests with
+    - `activator test`
 
-### Additional requirements
+### REST endpoints
 
-* Service should be able to handle CORS requests from any domain.
-* Think about test pyramid and write unit-, integration- and acceptance-tests if needed.
-* It's not necessary to document your code, but having a readme.md for developers who will potentially use your service would be great.
+On http://localhost:9000/
 
-  * If you decide to use Play!, try to use version 2.4 and do not use **GlobalSettings** or any globals like **Play.configuration** or **Play.application**, use dependency injection instead.
+| Endpoint      | Verb | Notes  |
+| ------------- |:----:| -----------------------------------------------------------------------------------:|
+| get(id)       | GET  |   The variable id needs to be a string with of a UUID format.Returns the carAdvert if found, otherwise null   |
+| getAll        | GET  |   Returns a JSON array of carAdverts |
+| create        | POST |    Accepts a properly structured JSON object for a CarAdvert, without the id field, creates it and returns it back with the created id field |
+| update        | POST |    Accepts a properly structured JSON object for a CarAdvert, with the existing id field, updates it and returns it back |
+| delete(id)    | POST |    The variable id needs to be a string with a UUID format. Returns the deleted CarAdvert if found and deleted, otherwise null|
 
-  * If you decide to use local Amazon Dynamo DB, which could be downloaded from Amazon as a [tar.gz](http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.tar.gz) or [zip](http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.zip) archive or installed with **homebrew** if you're using MacOS: ```brew install dynamodb-local```, try to not store data in Dynamo DB as a string blob, try to either use a Dynamo DB document model or store every field as a separate attribute.
+
+
+### Known Issues
+- Routes aren't validated, please ensure JSON object sent to `create` endpoint is of the form:
+```
+{
+	"title": String,
+	"fuel": String | {"gasoline", "diesel"},
+	"price": Int,
+	"isNew": Boolean,
+	"mileage": Integer,
+	"firstRegistration": String of "yyyy-mm-dd"
+}
+```
+
+e.g.
+
+```
+{
+	"title":"Audi A4",
+	"fuel":"gasoline",
+	"price":0,
+	"isNew":false,
+	"mileage":10000,
+	"firstRegistration":"1990-02-01"
+}
+```
+#### Also note that new cars also require mileage and firstRegistration fields
+
