@@ -59,3 +59,15 @@ e.g.
 ```
 #### Also note that new cars also require mileage and firstRegistration fields
 
+### Use Postman to manually test API
+A postman collection is included at the project root: `AutoScout.postman_collection.json`
+
+To use:
+
+1. Download postman [here](https://www.getpostman.com/)
+2. Import the collection (click postman's `Import` button at top left)
+3. Run database and server with default (local) settings
+3. Choose the create postman route and hit `Send`
+4. Copy the UUID of the newly created CarAdvert to append to the `update` and/or `delete` endpoints
+5. Enjoy!
+
