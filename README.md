@@ -25,7 +25,7 @@ On http://localhost:9000/
 | Endpoint      | Verb | Notes  |
 | ------------- |:----:| -----------------------------------------------------------------------------------:|
 | get(id)       | GET  |   The variable id needs to be a string with of a UUID format.Returns the carAdvert if found, otherwise null   |
-| getAll        | GET  |   Returns a JSON array of carAdverts |
+| getAll        | GET  |   Returns a JSON array of carAdverts. Optional query string variable "sortBy={id, title, fuel, price, isNew, mileage, firstRegistration} |
 | create        | POST |    Accepts a properly structured JSON object for a CarAdvert, without the id field, creates it and returns it back with the created id field |
 | update        | POST |    Accepts a properly structured JSON object for a CarAdvert, with the existing id field, updates it and returns it back |
 | delete(id)    | POST |    The variable id needs to be a string with a UUID format. Returns the deleted CarAdvert if found and deleted, otherwise null|
