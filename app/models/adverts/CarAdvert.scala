@@ -39,8 +39,21 @@ object CarAdvert {
     new CarAdvert(UUID.randomUUID(), title, fuel, price, false, None, None)
   }
 
+  def sortByField(carAdverts: Seq[CarAdvert], fieldName: String): Seq[CarAdvert] = {
+    fieldName match {
+      case Fields.id => carAdverts.sortBy(carAdvert => carAdvert.id)
+      case Fields.title => carAdverts.sortBy(carAdvert => carAdvert.title)
+      case Fields.fuel => carAdverts.sortBy(carAdvert => carAdvert.fuel)
+      case Fields.price => carAdverts.sortBy(carAdvert => carAdvert.price)
+      case Fields.isNew => carAdverts.sortBy(carAdvert => carAdvert.isNew)
+      case Fields.mileage => carAdverts.sortBy(carAdvert => carAdvert.mileage)
+      case Fields.firstRegistration => carAdverts.sortBy(carAdvert => carAdvert.firstRegistration)
+      case _ => carAdverts
+    }
+  }
+
   implicit val carAdvertFormatter: Format[CarAdvert] = (
-      (__ \ "id").format[UUID] and
+    (__ \ "id").format[UUID] and
       (__ \ "title").format[String] and
       (__ \ "fuel").format[Fuel] and
       (__ \ "price").format[Int] and

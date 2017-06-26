@@ -29,4 +29,17 @@ object Fuel {
       }
     }
   }
+
+  /**
+    * Implicit order definition for Fuel types. Uses lexical
+    * ordering of their string representations
+    *
+    * @tparam T the subtype of Fuel, either Gasoline or Diesel
+    * @return the int representing, less than, equal or greater lexicographically
+    */
+  implicit def ordering[T <: Fuel]: Ordering[T] = new Ordering[T] {
+    override def compare(x: T, y: T): Int = {
+      x.toString.compareTo(y.toString)
+    }
+  }
 }

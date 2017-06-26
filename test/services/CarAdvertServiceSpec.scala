@@ -3,7 +3,7 @@ package services
 import java.time.Instant
 import java.util.{Date, UUID}
 
-import models.adverts.CarAdvert
+import models.adverts.{CarAdvert, Fields}
 import models.adverts.Fuel.Gasoline
 import org.mockito.Mockito._
 import org.scalatest.FunSpec
@@ -32,10 +32,18 @@ class CarAdvertServiceSpec extends FunSpec with MockitoSugar {
     isNew = false,
     Some(45000),
     Some(Date.from(Instant.now())))
+  val advert3 = CarAdvert(uuid2,
+    "Audi A4",
+    Gasoline,
+    400000,
+    isNew = false,
+    Some(45000),
+    Some(Date.from(Instant.now())))
 
   def initStore(): CarAdvertRepository = {
     val currentStore = List(
       advert1,
+      advert3,
       advert2
     )
 
@@ -43,7 +51,7 @@ class CarAdvertServiceSpec extends FunSpec with MockitoSugar {
     when(mockRepo.get(uuid1)).thenReturn(currentStore.find(carAdvert => carAdvert.id.equals(uuid1)))
     when(mockRepo.get(uuid2)).thenReturn(currentStore.find(carAdvert => carAdvert.id.equals(uuid2)))
     when(mockRepo.get(nonExistentUUID)).thenReturn(currentStore.find(carAdvert => carAdvert.id.equals(nonExistentUUID)))
-    when(mockRepo.getAll()).thenReturn(currentStore)
+    when(mockRepo.getAll).thenReturn(currentStore)
     mockRepo
   }
 
@@ -75,11 +83,15 @@ class CarAdvertServiceSpec extends FunSpec with MockitoSugar {
       verify(testRepo).update(newCar)
     }
 
-    it("should return all existing car adverts") {
+    it("should return all existing car adverts without sorting") {
       val testService = new CarAdvertService(initStore())
-      assert(testService.getAllAdverts().size == 2)
+      assert(testService.getAllAdverts(None).size == 3)
     }
 
+    it("should return all existing car adverts sorted by price") {
+      val sortedByPrice = List(advert1, advert2, advert3)
+      val testService = new CarAdvertService(initStore)
+      assert(testService.getAllAdverts(Some(Fields.price)) == sortedByPrice)
+    }
   }
-
 }

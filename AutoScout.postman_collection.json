@@ -59,6 +59,17 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "getAllSortedByPrice",
+			"request": {
+				"url": "http://localhost:9000/getAll?sortBy=price",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }

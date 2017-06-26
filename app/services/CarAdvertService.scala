@@ -22,13 +22,15 @@ class CarAdvertService @Inject() (repository: CarAdvertRepository) {
   }
 
   def updateAdvert(updatedAdvert: CarAdvert): CarAdvert = {
-    // TODO: persist in data store
     repository.update(updatedAdvert)
     updatedAdvert
   }
 
-  def getAllAdverts(): Seq[CarAdvert] = {
-    repository.getAll()
+  def getAllAdverts(sortBy: Option[String]): Seq[CarAdvert] = {
+    sortBy match {
+      case Some(field) => CarAdvert.sortByField(repository.getAll, field)
+      case _ => repository.getAll
+    }
   }
 
   def getAdvert(id: UUID): Option[CarAdvert] = {

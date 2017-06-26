@@ -10,7 +10,7 @@ import models.adverts.CarAdvert
   */
 @ImplementedBy(classOf[CarAdvertMongoRepository])
 trait CarAdvertRepository {
-  def getAll(): Seq[CarAdvert]
+  def getAll: Seq[CarAdvert]
   def get(id: UUID): Option[CarAdvert]
   def insert(newCarAdvert: CarAdvert)
   def update(updatedCarAdvert: CarAdvert): Option[CarAdvert]

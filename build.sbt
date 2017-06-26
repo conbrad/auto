@@ -18,7 +18,6 @@ libraryDependencies += "org.scalatest" % "scalatest_2.11" % "3.0.1" % "test"
 
 routesImport ++= Seq(
   "java.util.UUID"
-
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"

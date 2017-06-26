@@ -54,7 +54,13 @@ class CarAdvertsController @Inject()(carAdvertService: CarAdvertService) extends
   }
 
   def getAllAdverts = Action { request =>
-    Ok(Json.toJson(carAdvertService.getAllAdverts()))
+    val sortBy: Option[String] = request
+      .queryString
+      .find(arg => arg._1.equals("sortBy")) match {
+      case Some(query) => query._2.headOption
+      case _ => None
+    }
+    Ok(Json.toJson(carAdvertService.getAllAdverts(sortBy)))
   }
 
   def getAdvert(id: UUID) = Action { request =>
